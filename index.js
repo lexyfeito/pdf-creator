@@ -18,8 +18,9 @@ app.get('/', function (req, res) {
 })
 
 app.post('/pdf', (req, res) => {
+    const project = JSON.parse(req.body.project)
     const entries = JSON.parse(req.body.entriesJson)
-    application.createPdfBinary(entries, function(binary) {
+    application.createPdfBinary(project, entries, function(binary) {
         res.setHeader('Content-Type', 'application/pdf');
         res.send(binary);
     }, function(error) {

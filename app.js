@@ -2,20 +2,23 @@ const pdfMakePrinter = require('pdfmake');
 const path = require('path');
 const fs = require('fs');
 
-function createPdfBinary(entries, callback) {
+function createPdfBinary(project, entries, callback) {
 
     const pdfDoc = {
+        header: { text: project.name, fontSize: 22, fontWeight: 'bold'},
+        pageOrientation: 'landscape',
         content: [
             {
                 layout: 'lightHorizontalLines', // optional
                 table: {
                     // headers are automatically repeated if the table spans over multiple pages
                     // you can declare how many rows should be treated as headers
-                    headerRows: 1,
-                    widths: [ 'auto', 'auto', '*', '*', 'auto', '*', 'auto'],
+                    headerRows: 2,
+                    widths: [ 'auto', 'auto', '*', '*', '*', 'auto'],
 
                     body: [
-                        [ 'Element', 'Title', 'Comment', 'Before Images', 'Status', 'After Image', 'Remarks'],
+                        [ 'Item', 'Element', 'Location', 'Title', 'Comment', 'Before Images'],
+                        [ 'Item', 'Status', 'After Image', 'Remarks', '', '']
                         // [ { text: 'Bold value', bold: true }, 'Val 2', 'Val 3', 'Val 4' ]
                     ]
                 }
@@ -23,18 +26,28 @@ function createPdfBinary(entries, callback) {
         ]
     }
 
+    var index = 1
     entries.forEach(entry => {
         pdfDoc.content[0].table.body.push(
             [
+                index,
                 entry.element,
+                entry.location,
                 entry.title,
                 entry.comments,
                 entry.images.map(image => {return {image: `data:application/pdf;base64,${image}`, width: 100}}),
-                entry.status,
-                entry.doneImages.map(image => {return {image: `data:application/pdf;base64,${image}`, width: 100}}),
-                entry.remarks
             ]
         )
+        pdfDoc.content[0].table.body.push(
+            [
+                index,
+                entry.status,
+                entry.doneImages.map(image => {return {image: `data:application/pdf;base64,${image}`, width: 100}}),
+                entry.remarks,
+                '',
+                ''
+            ])
+        index++
     })
 
     var fontDescriptors = {

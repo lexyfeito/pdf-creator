@@ -14,11 +14,11 @@ function createPdfBinary(project, entries, callback) {
                     // headers are automatically repeated if the table spans over multiple pages
                     // you can declare how many rows should be treated as headers
                     headerRows: 2,
-                    widths: [ 'auto', 'auto', '*', '*', '*', 'auto'],
+                    widths: [ 'auto', 'auto', '*', '*', '*', 'auto', 'auto'],
 
                     body: [
-                        [ 'Item', 'Element', 'Location', 'Title', 'Comment', 'Before Images'],
-                        [ 'Item', 'Status', 'After Image', 'Remarks', '', '']
+                        [ 'Item', 'Provided By', 'Location', 'LatLng', 'Element', 'Issue', 'Image'],
+                        [ 'Item', 'Status', 'After Image', 'Remarks', '', '', '']
                         // [ { text: 'Bold value', bold: true }, 'Val 2', 'Val 3', 'Val 4' ]
                     ]
                 }
@@ -31,10 +31,11 @@ function createPdfBinary(project, entries, callback) {
         pdfDoc.content[0].table.body.push(
             [
                 index,
-                entry.element,
+                entry.providedBy,
                 entry.location,
-                entry.title,
-                entry.comments,
+                entry.coordinates,
+                entry.element,
+                entry.issue,
                 entry.images.map(image => {return {image: `data:application/pdf;base64,${image}`, width: 100}}),
             ]
         )
@@ -44,6 +45,7 @@ function createPdfBinary(project, entries, callback) {
                 entry.status,
                 entry.doneImages.map(image => {return {image: `data:application/pdf;base64,${image}`, width: 100}}),
                 entry.remarks,
+                '',
                 '',
                 ''
             ])

@@ -8,8 +8,8 @@ const application = require('./app')
 const app = express();
 
 // app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: false }));
+app.use(bodyParser.json({limit: '100mb'}));
+app.use(bodyParser.urlencoded({ limit: '100mb', extended: false }));
 
 app.use(cors());
 

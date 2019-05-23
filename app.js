@@ -14,11 +14,19 @@ function createPdfBinary(project, entries, callback) {
                     // headers are automatically repeated if the table spans over multiple pages
                     // you can declare how many rows should be treated as headers
                     headerRows: 2,
-                    widths: [ 'auto', 'auto', '*', '*', '*', 'auto', 'auto'],
+                    // widths: [ 'auto', 'auto', '*', '*', '*', 'auto', 'auto'],
+                    widths: [ 'auto', 'auto', '*', '*', '*', 'auto', 'auto', 'auto', 'auto', 'auto'],
 
+                    // two lines
+                    // body: [
+                    //     [ 'Item', 'Provided By', 'Location', 'LatLng', 'Element', 'Issue', 'Image'],
+                    //     [ 'Item', 'Status', 'After Image', 'Remarks', '', '', '']
+                    //     // [ { text: 'Bold value', bold: true }, 'Val 2', 'Val 3', 'Val 4' ]
+                    // ]
+
+                    //one line
                     body: [
-                        [ 'Item', 'Provided By', 'Location', 'LatLng', 'Element', 'Issue', 'Image'],
-                        [ 'Item', 'Status', 'After Image', 'Remarks', '', '', '']
+                        [ 'Item', 'Provided By', 'Location', 'LatLng', 'Element', 'Issue', 'Image', 'Status', 'After Image', 'Remarks'],
                         // [ { text: 'Bold value', bold: true }, 'Val 2', 'Val 3', 'Val 4' ]
                     ]
                 }
@@ -26,31 +34,8 @@ function createPdfBinary(project, entries, callback) {
         ]
     }
 
-    var index = 1
-    entries.forEach(entry => {
-        pdfDoc.content[0].table.body.push(
-            [
-                index,
-                entry.providedBy,
-                entry.location,
-                entry.coordinates,
-                entry.element,
-                entry.issue,
-                entry.images.map(image => {return {image: `data:application/pdf;base64,${image}`, width: 100}}),
-            ]
-        )
-        pdfDoc.content[0].table.body.push(
-            [
-                index,
-                entry.status,
-                entry.doneImages.map(image => {return {image: `data:application/pdf;base64,${image}`, width: 100}}),
-                entry.remarks,
-                '',
-                '',
-                ''
-            ])
-        index++
-    })
+    // twoLiner(entries, pdfDoc)
+    oneLiner(entries, pdfDoc)
 
     var fontDescriptors = {
         Roboto: {
@@ -86,6 +71,54 @@ function createPdfBinary(project, entries, callback) {
 
     doc.end();
 
+}
+
+function twoLiner(entries, pdfDoc) {
+    var index = 1
+    entries.forEach(entry => {
+        pdfDoc.content[0].table.body.push(
+            [
+                index,
+                entry.providedBy,
+                entry.location,
+                entry.coordinates,
+                entry.element,
+                entry.issue,
+                entry.images.map(image => {return {image: `data:application/pdf;base64,${image}`, width: 100}}),
+            ]
+        )
+        pdfDoc.content[0].table.body.push(
+            [
+                index,
+                entry.status,
+                entry.doneImages.map(image => {return {image: `data:application/pdf;base64,${image}`, width: 100}}),
+                entry.remarks,
+                '',
+                '',
+                ''
+            ])
+        index++
+    })
+}
+
+function oneLiner(entries, pdfDoc) {
+    var index = 1
+    entries.forEach(entry => {
+        pdfDoc.content[0].table.body.push(
+            [
+                index,
+                entry.providedBy,
+                entry.location,
+                entry.coordinates,
+                entry.element,
+                entry.issue,
+                entry.images.map(image => {return {image: `data:application/pdf;base64,${image}`, width: 100}}),
+                entry.status,
+                entry.doneImages.map(image => {return {image: `data:application/pdf;base64,${image}`, width: 100}}),
+                entry.remarks,
+            ]
+        )
+    })
 }
 
 module.exports = {

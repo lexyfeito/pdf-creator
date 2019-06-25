@@ -121,6 +121,7 @@ function oneLiner(entries, pdfDoc) {
                 entry.remarks,
             ]
         )
+        index++
     })
 }
 

@@ -15,7 +15,7 @@ function createPdfBinary(project, entries, callback) {
                     // you can declare how many rows should be treated as headers
                     headerRows: 2,
                     // widths: [ 'auto', 'auto', '*', '*', '*', 'auto', 'auto'],
-                    widths: [ 'auto', 'auto', '*', '*', '*', 'auto', 'auto', 'auto'],
+                    widths: [ 'auto', 'auto', '*', '*', '*', 'auto', 'auto', 'auto', 'auto', 'auto'],
 
                     // two lines
                     // body: [
@@ -27,9 +27,9 @@ function createPdfBinary(project, entries, callback) {
                     //one line
                     body: [
                         // with images
-                        // [ 'Item', 'Provided By', 'Location', 'LatLng', 'Element', 'Issue', 'Image', 'Status', 'After Image', 'Remarks'],
+                        [ 'Item', 'Provided By', 'Location', 'LatLng', 'Element', 'Issue', 'Image', 'Status', 'After Image', 'Remarks'],
                         // no images
-                        [ 'Item', 'Provided By', 'Location', 'LatLng', 'Element', 'Issue', 'Status', 'Remarks'],
+                        // [ 'Item', 'Provided By', 'Location', 'LatLng', 'Element', 'Issue', 'Status', 'Remarks'],
                         // [ { text: 'Bold value', bold: true }, 'Val 2', 'Val 3', 'Val 4' ]
                     ]
                 }
@@ -115,9 +115,9 @@ function oneLiner(entries, pdfDoc) {
                 entry.coordinates,
                 entry.element,
                 entry.issue,
-                // entry.images.map(image => {return {image: `data:application/pdf;base64,${image}`, width: 100}}),
+                entry.images.map(image => {return {image: `data:application/pdf;base64,${image}`, width: 100}}),
                 entry.status,
-                // entry.doneImages.map(image => {return {image: `data:application/pdf;base64,${image}`, width: 100}}),
+                entry.doneImages.map(image => {return {image: `data:application/pdf;base64,${image}`, width: 100}}),
                 entry.remarks,
             ]
         )

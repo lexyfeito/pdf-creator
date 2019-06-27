@@ -19,7 +19,7 @@ function createPdfBinary(project, entries, callback) {
 
                     // two lines
                     // body: [
-                    //     [ 'Item', 'Provided By', 'Location', 'LatLng', 'Element', 'Issue', 'Image'],
+                    //     [ 'Item', 'Provided By', 'Location', 'LatLng', 'Category', 'Issue', 'Image'],
                     //     [ 'Item', 'Status', 'After Image', 'Remarks', '', '', '']
                     //     // [ { text: 'Bold value', bold: true }, 'Val 2', 'Val 3', 'Val 4' ]
                     // ]
@@ -27,9 +27,9 @@ function createPdfBinary(project, entries, callback) {
                     //one line
                     body: [
                         // with images
-                        [ 'Item', 'Provided By', 'Location', 'LatLng', 'Element', 'Issue', 'Image', 'Status', 'After Image', 'Remarks'],
+                        [ 'Item', 'Provided By', 'Location', 'LatLng', 'Category', 'Issue', 'Image', 'Status', 'After Image', 'Remarks'],
                         // no images
-                        // [ 'Item', 'Provided By', 'Location', 'LatLng', 'Element', 'Issue', 'Status', 'Remarks'],
+                        // [ 'Item', 'Provided By', 'Location', 'LatLng', 'Category', 'Issue', 'Status', 'Remarks'],
                         // [ { text: 'Bold value', bold: true }, 'Val 2', 'Val 3', 'Val 4' ]
                     ]
                 }
